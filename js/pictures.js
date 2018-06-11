@@ -97,6 +97,6 @@ renderBigPicture(photos[0]);
 bigPicture.classList.remove('hidden');
 
 var socialCommentCount = document.querySelector('.social__comment-count');
-var socialCommentLoad = document.querySelector('.social__comment-loadmore');
+var socialCommentLoad = document.querySelector('.social__loadmore');
 socialCommentCount.classList.add('visually-hidden');
 socialCommentLoad.classList.add('visually-hidden');
