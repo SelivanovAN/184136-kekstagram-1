@@ -26,7 +26,7 @@ var getRandomNumber = function (min, max) {
 };
 
 // --------- фукнция перемешивания массива ---------
-function shuffle(array) {
+var shuffleComments = function (array) {
   var j;
   var temp;
   var i;
@@ -37,7 +37,7 @@ function shuffle(array) {
     array[j] = temp;
   }
   return array;
-}
+};
 
 // --------- Генерируется массив фоток количеством 25 шт из цикла (функция генерации случайных данных) ---------
 var photos = [];
@@ -45,7 +45,7 @@ for (var j = 0; j < COUNT_PHOTOS; j++) {
   photos.push({
     url: 'photos/' + (j + 1) + '.jpg',
     likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
-    comments: shuffle(PHOTO_COMMENTS).slice(0, getRandomNumber(0, PHOTO_COMMENTS.length - 1)),
+    comments: shuffleComments(PHOTO_COMMENTS).slice(0, getRandomNumber(0, PHOTO_COMMENTS.length - 1)),
     description: PHOTO_DESCRIPTIONS[getRandomNumber(0, PHOTO_DESCRIPTIONS.length - 1)]
   });
 }
