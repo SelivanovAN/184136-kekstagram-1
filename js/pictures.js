@@ -41,14 +41,19 @@ var shuffleComments = function (array) {
 
 // --------- Генерируется массив фоток количеством 25 шт из цикла (функция генерации случайных данных) ---------
 var photos = [];
-for (var j = 0; j < COUNT_PHOTOS; j++) {
-  photos.push({
-    url: 'photos/' + (j + 1) + '.jpg',
-    likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
-    comments: shuffleComments(PHOTO_COMMENTS).slice(0, getRandomNumber(0, PHOTO_COMMENTS.length - 1)),
-    description: PHOTO_DESCRIPTIONS[getRandomNumber(0, PHOTO_DESCRIPTIONS.length - 1)]
-  });
-}
+
+var appendPhotos = function () {
+  for (var j = 0; j < COUNT_PHOTOS; j++) {
+    photos.push({
+      url: 'photos/' + (j + 1) + '.jpg',
+      likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
+      comments: shuffleComments(PHOTO_COMMENTS).slice(0, getRandomNumber(0, PHOTO_COMMENTS.length - 1)),
+      description: PHOTO_DESCRIPTIONS[getRandomNumber(0, PHOTO_DESCRIPTIONS.length - 1)]
+    });
+  }
+};
+
+appendPhotos();
 
 var gallery = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture').content;
@@ -64,13 +69,16 @@ var renderPhoto = function (photo) {
   return photoElement;
 };
 
-var fragment = document.createDocumentFragment();
-// --------- функция заполнения блока DOM-элементами на основе массива ---------
-for (var i = 0; i < photos.length; i++) {
-  fragment.appendChild(renderPhoto(photos[i]));
-}
+var addPhotoToFragment = function () {
+  var fragment = document.createDocumentFragment();
+  // --------- функция заполнения блока DOM-элементами на основе массива ---------
+  for (var i = 0; i < photos.length; i++) {
+    fragment.appendChild(renderPhoto(photos[i]));
+  }
+  gallery.appendChild(fragment);
+};
 
-gallery.appendChild(fragment);
+addPhotoToFragment();
 
 var bigPicture = document.querySelector('.big-picture');
 
@@ -79,6 +87,7 @@ var renderBigPicture = function (photo) {
   bigPicture.querySelector('.likes-count').textContent = photo.likes;
   bigPicture.querySelector('.comments-count').textContent = photo.comments.length;
   bigPicture.querySelector('.social__caption').textContent = photo.description;
+
   var socialComments = bigPicture.querySelector('.social__comments');
   var socialComment = socialComments.querySelector('.social__comment').cloneNode(true);
   socialComments.innerHTML = '';
@@ -88,12 +97,14 @@ var renderBigPicture = function (photo) {
   for (var l = 0; l < photo.comments.length; l++) {
     var comment = socialComment.cloneNode(true);
     comment.querySelector('.social__picture').src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
-    comment.childNodes[comment.childNodes.length - 1].nodeValue = photo.comments[l];
+    var socialText = comment.querySelector('.social__text');
+    socialText.innerHTML = '';
+    socialText.textContent = photo.comments[l];
     fragmentBigPicture.appendChild(comment);
   }
   socialComments.appendChild(fragmentBigPicture);
 };
-renderBigPicture(photos[0]);
+renderBigPicture(photos[8]);
 bigPicture.classList.remove('hidden');
 
 var socialCommentCount = document.querySelector('.social__comment-count');
