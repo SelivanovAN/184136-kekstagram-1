@@ -133,6 +133,8 @@ var MAX_SCALE = 100;
 var STEP_SCALE = 25;
 var imagePreview = uploadForm.querySelector('.img-upload__preview > img');
 var pictureElements = [];
+var currentEffect = 'none';
+var positionPin = uploadForm.querySelector('.scale__value').value;
 
 // --------- Открываем форму для редактирования ---------
 uploadFile.addEventListener('change', function (evt) {
@@ -145,8 +147,10 @@ var closeForm = function () {
   uploadOverlay.classList.add('hidden');
 };
 
+var textDescription = document.querySelector('.text__description');
+
 document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && document.activeElement !== hashtagsContainer && document.activeElement !== textDescription) {
     closeForm();
   }
 });
@@ -173,12 +177,43 @@ buttonPlus.addEventListener('click', function () {
 });
 
 // ----------- Применяем эффекты ----------
-uploadForm.addEventListener('change', function (evt) {
-  var target = evt.target.closest('.img-upload__effects');
-  if (target) {
-    imagePreview.className = 'effects__preview--' + evt.target.value;
+
+var setEffect = function () {
+  var result;
+  switch (currentEffect) {
+    case 'chrome':
+      result = 'grayscale(' + (positionPin / 100) + ')';
+      break;
+    case 'sepia':
+      result = 'sepia(' + (positionPin / 100) + ')';
+      break;
+    case 'marvin':
+      result = 'invert(' + positionPin + '%)';
+      break;
+    case 'phobos':
+      result = 'blur(' + (positionPin * 3 / 100) + 'px)';
+      break;
+    case 'heat':
+      result = 'brightness(' + ((positionPin * 2 / 100) + 1) + ')';
+      break;
+    default: result = 'none';
+      break;
   }
-});
+  imagePreview.style.filter = result;
+};
+var radioButtons = uploadForm.querySelectorAll('.effects__radio');
+for (var j = 0; j < radioButtons.length; j++) {
+  radioButtons[j].addEventListener('click', function (evt) {
+    var target = evt.target.closest('.img-upload__effects');
+
+    if (target) {
+      imagePreview.className = 'effects__preview--' + evt.target.value;
+      currentEffect = evt.target.value;
+      setEffect();
+    }
+  });
+}
+
 
 // ----------- Показываем фотографии в полноэкранном формате при нажатии на маленькое----------
 
@@ -198,6 +233,7 @@ var btnCloseBigPicture = bigPicture.querySelector('.big-picture__cancel');
 var resetImgForm = function () {
   printSize(100);
   imagePreview.setAttribute('class', '');
+  imagePreview.style.filter = 'none';
 };
 
 var closeBigPicture = function () {
@@ -219,6 +255,63 @@ window.addEventListener('keydown', function (evt) {
     }
     if (!uploadForm.classList.contains('hidden')) {
       resetImgForm();
+    }
+  }
+});
+
+// ----------- Работа со спином ----------
+
+var scalePin = document.querySelector('.scale__pin');
+scalePin.style.left = '100%';
+var scaleLevel = document.querySelector('.scale__level');
+scaleLevel.style.width = '100%';
+// var scaleLevel = document.querySelector('.scale__level');
+// var SLIDER_WIDTH = 450;
+
+scalePin.addEventListener('mouseup', function () {
+  setEffect();
+});
+
+// ----------- Работа с хештегами и комментариями ----------
+
+var hashtagsContainer = document.querySelector('.text__hashtags'); // double form
+
+function searchForSameValues(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    var arrValue = arr[i];
+    for (var l = 0; l < arr.length; l++) {
+      if (arr[l] === arrValue && l !== i) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+var HASHTAG_CODE = '#';
+
+hashtagsContainer.addEventListener('input', function () {
+  hashtagsContainer.setCustomValidity('');
+  var textHashtags = hashtagsContainer.value;
+  var hashtags = textHashtags.split(' ');
+  var sameValue = searchForSameValues(hashtags);
+
+  if (sameValue) {
+    hashtagsContainer.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
+  }
+  if (hashtags.length > 5) {
+    hashtagsContainer.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
+  }
+
+  for (var i = 0; i < hashtags.length; i++) {
+    if (hashtags[i][0] !== HASHTAG_CODE) {
+      hashtagsContainer.setCustomValidity('Хэш-тег начинается с символа #');
+    }
+    if (hashtags[i] === HASHTAG_CODE) {
+      hashtagsContainer.setCustomValidity('Хеш-тег не может состоять только из одной решётки');
+    }
+    if (hashtags[i].length > 21) {
+      hashtagsContainer.setCustomValidity('Максимальная длина одного хэш-тега 20 символов');
     }
   }
 });
