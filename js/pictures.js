@@ -225,7 +225,7 @@ gallery.addEventListener('click', function (evt) {
     renderBigPicture(photos[idPhoto]);
     bigPicture.classList.remove('hidden');
   }
-  // if (targetElement.querySelector('.picture__stat')) {
+  // if (targetElement.querySelector('.picture__stat')) { // при клике на коменты и лайки на маленькой фотке , должна открыаться большоая
   //   bigPicture.classList.remove('hidden');
   // }
 });
