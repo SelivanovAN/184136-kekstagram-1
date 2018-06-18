@@ -248,7 +248,7 @@ uploadClose.addEventListener('click', function () {
   resetImgForm();
 });
 
-window.addEventListener('keydown', function (evt) {
+window.addEventListener('keydown', function (evt) { //закрываем и большую картинку и форму
   if (evt.keyCode === ESC_KEYCODE) {
     if (!bigPicture.classList.contains('hidden')) {
       closeBigPicture();
@@ -265,8 +265,6 @@ var scalePin = document.querySelector('.scale__pin');
 scalePin.style.left = '100%';
 var scaleLevel = document.querySelector('.scale__level');
 scaleLevel.style.width = '100%';
-// var scaleLevel = document.querySelector('.scale__level');
-// var SLIDER_WIDTH = 450;
 
 scalePin.addEventListener('mouseup', function () {
   setEffect();
