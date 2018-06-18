@@ -225,6 +225,9 @@ gallery.addEventListener('click', function (evt) {
     renderBigPicture(photos[idPhoto]);
     bigPicture.classList.remove('hidden');
   }
+  // if (targetElement.querySelector('.picture__stat')) {
+  //   bigPicture.classList.remove('hidden');
+  // }
 });
 
 // ----------- Закрываем окно bigPicture ----------
@@ -248,7 +251,7 @@ uploadClose.addEventListener('click', function () {
   resetImgForm();
 });
 
-window.addEventListener('keydown', function (evt) { //закрываем и большую картинку и форму
+window.addEventListener('keydown', function (evt) { // закрываем и большую картинку и форму
   if (evt.keyCode === ESC_KEYCODE) {
     if (!bigPicture.classList.contains('hidden')) {
       closeBigPicture();
