@@ -217,17 +217,33 @@ for (var j = 0; j < radioButtons.length; j++) {
 
 // ----------- Показываем фотографии в полноэкранном формате при нажатии на маленькое----------
 
+// gallery.addEventListener('click', function (evt) {
+//   var targetElement = evt.target;
+//   pictureElements = gallery.querySelectorAll('img.picture__img');
+//   if (targetElement.tagName === 'IMG') {
+//     var idPhoto = Array.from(pictureElements).indexOf(targetElement);
+//     renderBigPicture(photos[idPhoto]);
+//     bigPicture.classList.remove('hidden');
+//   }
+//   // if (targetElement.querySelector('.picture__stat')) { // при клике на коменты и лайки на маленькой фотке , должна открыаться большоая
+//   //   bigPicture.classList.remove('hidden');
+//   // }
+// });
+
 gallery.addEventListener('click', function (evt) {
-  var targetElement = evt.target;
-  pictureElements = gallery.querySelectorAll('img.picture__img');
-  if (targetElement.tagName === 'IMG') {
-    var idPhoto = Array.from(pictureElements).indexOf(targetElement);
-    renderBigPicture(photos[idPhoto]);
-    bigPicture.classList.remove('hidden');
+  var targetElement = evt.target.closest('.picture__link');
+  if (targetElement) {
+    var imageElement = targetElement.querySelector('img');
+
+    if (imageElement) {
+      if (pictureElements.length === 0) {
+        pictureElements = gallery.querySelectorAll('.picture__img');
+      }
+      var index = Array.from(pictureElements).indexOf(imageElement);
+      renderBigPicture(photos[index]);
+      bigPicture.classList.remove('hidden');
+    }
   }
-  // if (targetElement.querySelector('.picture__stat')) { // при клике на коменты и лайки на маленькой фотке , должна открыаться большоая
-  //   bigPicture.classList.remove('hidden');
-  // }
 });
 
 // ----------- Закрываем окно bigPicture ----------
