@@ -119,8 +119,6 @@ var renderBigPicture = function (photo) {
 
 renderBigPicture(photos[8]);
 
-// bigPicture.classList.remove('hidden');
-
 var socialCommentCount = document.querySelector('.social__comment-count');
 var socialCommentLoad = document.querySelector('.social__loadmore');
 socialCommentCount.classList.add('visually-hidden');
@@ -222,7 +220,6 @@ for (var j = 0; j < radioButtons.length; j++) {
     }
   });
 }
-
 
 // ----------- Показываем фотографии в полноэкранном формате при нажатии на маленькое----------
 
