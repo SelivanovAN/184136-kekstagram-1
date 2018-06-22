@@ -306,7 +306,7 @@ var HASHTAG = {
 
 hashtagsContainer.addEventListener('input', function () {
   hashtagsContainer.setCustomValidity('');
-  var textHashtags = hashtagsContainer.value.lower().trim();
+  var textHashtags = hashtagsContainer.value.toLowerCase().trim();
   var hashtags = textHashtags.split(' ');
   var sameValue = searchForSameValues(hashtags);
 
