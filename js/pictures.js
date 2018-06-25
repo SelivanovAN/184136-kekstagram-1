@@ -208,6 +208,7 @@ var setEffect = function () {
   }
   imagePreview.style.filter = result;
 };
+
 var radioButtons = uploadForm.querySelectorAll('.effects__radio');
 for (var j = 0; j < radioButtons.length; j++) {
   radioButtons[j].addEventListener('click', function (evt) {
@@ -280,6 +281,48 @@ scaleLevel.style.width = '100%';
 
 scalePin.addEventListener('mouseup', function () {
   setEffect();
+});
+
+var SLIDER_WIDTH = 450;
+
+scalePin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX
+    };
+
+    startCoords = {
+      x: moveEvt.clientX
+    };
+
+    var leftOffsetPin = scalePin.offsetLeft - shift.x;
+
+    if (leftOffsetPin >= 0 && SLIDER_WIDTH >= leftOffsetPin) {
+      positionPin = (leftOffsetPin / SLIDER_WIDTH) * 100;
+      scalePin.style.left = leftOffsetPin + 'px';
+      scaleLevel.style.width = positionPin + '%';
+      setEffect();
+    }
+
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
 
 // ----------- Работа с хештегами и комментариями ----------
