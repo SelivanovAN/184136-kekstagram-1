@@ -20,7 +20,6 @@
   var imagePreview = uploadForm.querySelector('.img-upload__preview > img');
   var pictureElements = [];
   var currentEffect = 'none';
-  window.positionPin = uploadForm.querySelector('.scale__value').value;
 
   // --------- Открываем форму для редактирования ---------
 
@@ -70,23 +69,24 @@
   // ----------- Применяем эффекты ----------
 
   window.slider = {
+    positionPin: uploadForm.querySelector('.scale__value').value,
     setEffect: function () {
       var result;
       switch (currentEffect) {
         case 'chrome':
-          result = 'grayscale(' + (window.positionPin / 100) + ')';
+          result = 'grayscale(' + (window.slider.positionPin / 100) + ')';
           break;
         case 'sepia':
-          result = 'sepia(' + (window.positionPin / 100) + ')';
+          result = 'sepia(' + (window.slider.positionPin / 100) + ')';
           break;
         case 'marvin':
-          result = 'invert(' + window.positionPin + '%)';
+          result = 'invert(' + window.slider.positionPin + '%)';
           break;
         case 'phobos':
-          result = 'blur(' + (window.positionPin * 3 / 100) + 'px)';
+          result = 'blur(' + (window.slider.positionPin * 3 / 100) + 'px)';
           break;
         case 'heat':
-          result = 'brightness(' + ((window.positionPin * 2 / 100) + 1) + ')';
+          result = 'brightness(' + ((window.slider.positionPin * 2 / 100) + 1) + ')';
           break;
         default: result = 'none';
           break;
@@ -121,14 +121,14 @@
         }
         var index = Array.from(pictureElements).indexOf(imageElement);
         window.renderBigPicture(window.photos[index]);
-        window.bigPicture.classList.remove('hidden');
+        window.bigPicture.bigPicture.classList.remove('hidden');
       }
     }
   });
 
   // ----------- Закрываем окно bigPicture ----------
 
-  var btnCloseBigPicture = window.bigPicture.querySelector('.big-picture__cancel');
+  var btnCloseBigPicture = window.bigPicture.bigPicture.querySelector('.big-picture__cancel');
 
   var resetImgForm = function () {
     printSize(100);
@@ -137,7 +137,7 @@
   };
 
   var closeBigPicture = function () {
-    window.bigPicture.classList.add('hidden');
+    window.bigPicture.bigPicture.classList.add('hidden');
     resetImgForm();
   };
 
@@ -150,7 +150,7 @@
 
   window.addEventListener('keydown', function (evt) { // закрываем и большую картинку и форму
     if (evt.keyCode === ESC_KEYCODE) {
-      if (!window.bigPicture.classList.contains('hidden')) {
+      if (!window.bigPicture.bigPicture.classList.contains('hidden')) {
         closeBigPicture();
       }
       if (!uploadForm.classList.contains('hidden')) {

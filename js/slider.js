@@ -36,9 +36,9 @@
       var leftOffsetPin = scalePin.offsetLeft - shift.x;
 
       if (leftOffsetPin >= 0 && SLIDER_WIDTH >= leftOffsetPin) {
-        window.positionPin = (leftOffsetPin / SLIDER_WIDTH) * 100;
+        window.slider.positionPin = (leftOffsetPin / SLIDER_WIDTH) * 100;
         scalePin.style.left = leftOffsetPin + 'px';
-        scaleLevel.style.width = window.positionPin + '%';
+        scaleLevel.style.width = window.slider.positionPin + '%';
         window.slider.setEffect();
       }
 
