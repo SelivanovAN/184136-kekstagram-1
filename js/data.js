@@ -37,11 +37,11 @@
 
   // --------- Генерируется массив фоток количеством 25 шт из цикла (функция генерации случайных данных) ---------
 
-  window.photos = [];
+  var photos = [];
 
   var appendPhotos = function () {
     for (var j = 0; j < COUNT_PHOTOS; j++) {
-      window.photos.push({
+      photos.push({
         url: 'photos/' + (j + 1) + '.jpg',
         likes: window.util.getRandomNumber(MIN_LIKES, MAX_LIKES),
         comments: shuffleComments(PHOTO_COMMENTS).slice(0, window.util.getRandomNumber(0, PHOTO_COMMENTS.length - 1)),
@@ -51,4 +51,5 @@
   };
 
   appendPhotos();
+  window.photos = photos;
 })();

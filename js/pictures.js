@@ -69,28 +69,30 @@
 
   // ----------- Применяем эффекты ----------
 
-  window.setEffect = function () {
-    var result;
-    switch (currentEffect) {
-      case 'chrome':
-        result = 'grayscale(' + (window.positionPin / 100) + ')';
-        break;
-      case 'sepia':
-        result = 'sepia(' + (window.positionPin / 100) + ')';
-        break;
-      case 'marvin':
-        result = 'invert(' + window.positionPin + '%)';
-        break;
-      case 'phobos':
-        result = 'blur(' + (window.positionPin * 3 / 100) + 'px)';
-        break;
-      case 'heat':
-        result = 'brightness(' + ((window.positionPin * 2 / 100) + 1) + ')';
-        break;
-      default: result = 'none';
-        break;
+  window.slider = {
+    setEffect: function () {
+      var result;
+      switch (currentEffect) {
+        case 'chrome':
+          result = 'grayscale(' + (window.positionPin / 100) + ')';
+          break;
+        case 'sepia':
+          result = 'sepia(' + (window.positionPin / 100) + ')';
+          break;
+        case 'marvin':
+          result = 'invert(' + window.positionPin + '%)';
+          break;
+        case 'phobos':
+          result = 'blur(' + (window.positionPin * 3 / 100) + 'px)';
+          break;
+        case 'heat':
+          result = 'brightness(' + ((window.positionPin * 2 / 100) + 1) + ')';
+          break;
+        default: result = 'none';
+          break;
+      }
+      imagePreview.style.filter = result;
     }
-    imagePreview.style.filter = result;
   };
 
   var radioButtons = uploadForm.querySelectorAll('.effects__radio');
@@ -101,7 +103,7 @@
       if (target) {
         imagePreview.className = 'effects__preview--' + evt.target.value;
         currentEffect = evt.target.value;
-        window.setEffect();
+        window.slider.setEffect();
       }
     });
   }

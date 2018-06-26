@@ -10,7 +10,7 @@
   scaleLevel.style.width = '100%';
 
   scalePin.addEventListener('mouseup', function () {
-    window.setEffect();
+    window.slider.setEffect();
   });
 
   var SLIDER_WIDTH = 450;
@@ -39,7 +39,7 @@
         window.positionPin = (leftOffsetPin / SLIDER_WIDTH) * 100;
         scalePin.style.left = leftOffsetPin + 'px';
         scaleLevel.style.width = window.positionPin + '%';
-        window.setEffect();
+        window.slider.setEffect();
       }
 
     };
