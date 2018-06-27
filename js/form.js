@@ -21,12 +21,14 @@
   var pictureElements = [];
   var currentEffect = 'none';
   var positionPinElement = uploadForm.querySelector('.scale__value').value;
+  var imgUploadScale = document.querySelector('.img-upload__scale');
 
   // --------- Открываем форму для редактирования ---------
 
   uploadFile.addEventListener('change', function (evt) {
     evt.stopPropagation(); //  отменяет всплыв события
     uploadOverlay.classList.remove('hidden');
+    imgUploadScale.classList.add('hidden');
   });
 
   // ----------- Закрываем форму редактирования ----------
@@ -68,23 +70,23 @@
 
   // ----------- Применяем эффекты ----------
 
-  var setEffect = function () {
+  var setEffect = function (sliderValue) {
     var result;
     switch (currentEffect) {
       case 'chrome':
-        result = 'grayscale(' + (window.slider.pinNumberValue / 100) + ')';
+        result = 'grayscale(' + (sliderValue / 100) + ')';
         break;
       case 'sepia':
-        result = 'sepia(' + (window.slider.pinNumberValue / 100) + ')';
+        result = 'sepia(' + (sliderValue / 100) + ')';
         break;
       case 'marvin':
-        result = 'invert(' + window.slider.pinNumberValue + '%)';
+        result = 'invert(' + sliderValue + '%)';
         break;
       case 'phobos':
-        result = 'blur(' + (window.slider.pinNumberValue * 3 / 100) + 'px)';
+        result = 'blur(' + (sliderValue * 3 / 100) + 'px)';
         break;
       case 'heat':
-        result = 'brightness(' + ((window.slider.pinNumberValue * 2 / 100) + 1) + ')';
+        result = 'brightness(' + ((sliderValue * 2 / 100) + 1) + ')';
         break;
       default: result = 'none';
         break;
@@ -101,7 +103,11 @@
       if (target) {
         imagePreview.className = 'effects__preview--' + evt.target.value;
         currentEffect = evt.target.value;
-        setEffect();
+        if (evt.target.value !== 'none') {
+          imgUploadScale.classList.remove('hidden');
+        }
+        window.slider.setDefaultPosition();
+        setEffect(positionPinElement);
       }
     });
   }
@@ -206,7 +212,7 @@
   // ----------- Экспорт данных ----------
 
   window.form = {
-    mapPin: positionPinElement,
-    drowEffect: setEffect
+    mapPinValue: positionPinElement,
+    drawEffect: setEffect
   };
 })();

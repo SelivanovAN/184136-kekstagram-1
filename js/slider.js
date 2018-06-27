@@ -3,14 +3,17 @@
 (function () {
 
   // ----------- Работа со спином ----------
-
   var scalePin = document.querySelector('.scale__pin');
-  scalePin.style.left = '100%';
   var scaleLevel = document.querySelector('.scale__level');
-  scaleLevel.style.width = '100%';
+
+  var setDefaultPosition = function () {
+    scalePin.style.left = '100%';
+    scaleLevel.style.width = '100%';
+  };
+  setDefaultPosition();
 
   scalePin.addEventListener('mouseup', function () {
-    window.form.drowEffect();
+    window.form.drawEffect(parseInt(window.form.mapPinValue, 10));
   });
 
   var SLIDER_WIDTH = 450;
@@ -36,15 +39,10 @@
       var leftOffsetPin = scalePin.offsetLeft - shift.x;
 
       if (leftOffsetPin >= 0 && SLIDER_WIDTH >= leftOffsetPin) {
-        // window.form.mapPin = (leftOffsetPin / SLIDER_WIDTH) * 100;
         scalePin.style.left = leftOffsetPin + 'px';
-        scaleLevel.style.width = window.form.mapPin + '%';
-        window.form.mapPin = Math.floor((leftOffsetPin * 100) / SLIDER_WIDTH);
-        var pinNumber = parseInt(window.form.mapPin, 10);
-        window.slider = {
-          pinNumberValue: pinNumber
-        };
-        window.form.drowEffect(pinNumber);
+        scaleLevel.style.width = window.form.mapPinValue + '%';
+        window.form.mapPinValue = Math.floor((leftOffsetPin * 100) / SLIDER_WIDTH);
+        window.form.drawEffect(parseInt(window.form.mapPinValue, 10));
       }
 
     };
@@ -59,4 +57,8 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  window.slider = {
+    setDefaultPosition: setDefaultPosition
+  };
 })();
