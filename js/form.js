@@ -36,8 +36,7 @@
   };
 
   var textDescription = document.querySelector('.text__description');
-
-  var hashtagsContainer = document.querySelector('.text__hashtags'); // double picture and validation
+  var hashtagsContainer = document.querySelector('.text__hashtags');
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEYCODE && document.activeElement !== hashtagsContainer && document.activeElement !== textDescription) { // в файле валидации window.hashtagsContainer - без виндо, как от виндоу избавиться?
@@ -69,7 +68,6 @@
 
   // ----------- Применяем эффекты ----------
 
-
   var setEffect = function () {
     var result;
     switch (currentEffect) {
@@ -95,6 +93,7 @@
   };
 
   var radioButtons = uploadForm.querySelectorAll('.effects__radio');
+
   for (var j = 0; j < radioButtons.length; j++) {
     radioButtons[j].addEventListener('click', function (evt) {
       var target = evt.target.closest('.img-upload__effects');
@@ -203,6 +202,8 @@
       }
     }
   });
+
+  // ----------- Экспорт данных ----------
 
   window.form = {
     mapPinValue: positionPinElementValue,
