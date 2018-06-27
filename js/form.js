@@ -98,14 +98,17 @@
 
   for (var j = 0; j < radioButtons.length; j++) {
     radioButtons[j].addEventListener('click', function (evt) {
+
       var target = evt.target.closest('.img-upload__effects');
 
       if (target) {
         imagePreview.className = 'effects__preview--' + evt.target.value;
-        currentEffect = evt.target.value;
         if (evt.target.value !== 'none') {
           imgUploadScale.classList.remove('hidden');
+        } else {
+          imgUploadScale.classList.add('hidden');
         }
+        currentEffect = evt.target.value;
         window.slider.setDefaultPosition();
         setEffect(positionPinElement);
       }
