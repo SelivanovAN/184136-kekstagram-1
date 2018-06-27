@@ -68,23 +68,23 @@
 
   // ----------- Применяем эффекты ----------
 
-  var setEffect = function (positionPin) {
+  var setEffect = function () {
     var result;
     switch (currentEffect) {
       case 'chrome':
-        result = 'grayscale(' + (positionPin / 100) + ')';
+        result = 'grayscale(' + (window.slider.pinNumberValue / 100) + ')';
         break;
       case 'sepia':
-        result = 'sepia(' + (positionPin / 100) + ')';
+        result = 'sepia(' + (window.slider.pinNumberValue / 100) + ')';
         break;
       case 'marvin':
-        result = 'invert(' + positionPin + '%)';
+        result = 'invert(' + window.slider.pinNumberValue + '%)';
         break;
       case 'phobos':
-        result = 'blur(' + (positionPin * 3 / 100) + 'px)';
+        result = 'blur(' + (window.slider.pinNumberValue * 3 / 100) + 'px)';
         break;
       case 'heat':
-        result = 'brightness(' + ((positionPin * 2 / 100) + 1) + ')';
+        result = 'brightness(' + ((window.slider.pinNumberValue * 2 / 100) + 1) + ')';
         break;
       default: result = 'none';
         break;
