@@ -1,14 +1,13 @@
 'use strict';
 
 (function () {
-  window.gallery = document.querySelector('.pictures');
+  var galleryElement = document.querySelector('.pictures');
   var pictureTemplate = document.querySelector('#picture').content;
 
   // --------- Заполняем данными сгенерированные карточки (функция создания DOM-элемента на основе JS-объекта )---------
 
   var renderPhoto = function (photo) {
-    // функция создания DOM-элемента на основе JS-объекта
-    // функция заполнения блока DOM-элементами на основе массива JS-объектов
+    // функция клонирования одного ДОМ элемента
     var photoElement = pictureTemplate.cloneNode(true);
     photoElement.querySelector('.picture__img').src = photo.url;
     photoElement.querySelector('.picture__stat--likes').textContent = photo.likes;
@@ -18,12 +17,14 @@
 
   var addPhotoToFragment = function () {
     var fragment = document.createDocumentFragment();
-    // --------- функция заполнения блока DOM-элементами на основе массива ---------
-    for (var i = 0; i < window.photos.length; i++) {
-      fragment.appendChild(renderPhoto(window.photos[i]));
+    // --------- функция заполнения контейнера DOM-элементами на основе массива из 25 шт---------
+    for (var i = 0; i < window.dataPhotoArr.length; i++) {
+      fragment.appendChild(renderPhoto(window.dataPhotoArr[i]));
     }
-    window.gallery.appendChild(fragment);
+    galleryElement.appendChild(fragment);
   };
 
   addPhotoToFragment();
+
+  window.galleryElement = galleryElement;
 })();

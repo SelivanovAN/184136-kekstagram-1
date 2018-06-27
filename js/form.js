@@ -2,7 +2,7 @@
 
 (function () {
 
-// --------- Module4-task1 Загрузка изображения и показ фото в полноэкранном режиме ---------
+  // --------- Module4-task1 Загрузка изображения и показ фото в полноэкранном режиме ---------
 
   var ESC_KEYCODE = 27;
   var uploadForm = document.querySelector('.img-upload__form');
@@ -20,6 +20,7 @@
   var imagePreview = uploadForm.querySelector('.img-upload__preview > img');
   var pictureElements = [];
   var currentEffect = 'none';
+  var positionPinElementValue = uploadForm.querySelector('.scale__value').value;
 
   // --------- Открываем форму для редактирования ---------
 
@@ -68,31 +69,29 @@
 
   // ----------- Применяем эффекты ----------
 
-  window.slider = {
-    positionPin: uploadForm.querySelector('.scale__value').value,
-    setEffect: function () {
-      var result;
-      switch (currentEffect) {
-        case 'chrome':
-          result = 'grayscale(' + (window.slider.positionPin / 100) + ')';
-          break;
-        case 'sepia':
-          result = 'sepia(' + (window.slider.positionPin / 100) + ')';
-          break;
-        case 'marvin':
-          result = 'invert(' + window.slider.positionPin + '%)';
-          break;
-        case 'phobos':
-          result = 'blur(' + (window.slider.positionPin * 3 / 100) + 'px)';
-          break;
-        case 'heat':
-          result = 'brightness(' + ((window.slider.positionPin * 2 / 100) + 1) + ')';
-          break;
-        default: result = 'none';
-          break;
-      }
-      imagePreview.style.filter = result;
+
+  var setEffect = function () {
+    var result;
+    switch (currentEffect) {
+      case 'chrome':
+        result = 'grayscale(' + (positionPinElementValue / 100) + ')';
+        break;
+      case 'sepia':
+        result = 'sepia(' + (positionPinElementValue / 100) + ')';
+        break;
+      case 'marvin':
+        result = 'invert(' + positionPinElementValue + '%)';
+        break;
+      case 'phobos':
+        result = 'blur(' + (positionPinElementValue * 3 / 100) + 'px)';
+        break;
+      case 'heat':
+        result = 'brightness(' + ((positionPinElementValue * 2 / 100) + 1) + ')';
+        break;
+      default: result = 'none';
+        break;
     }
+    imagePreview.style.filter = result;
   };
 
   var radioButtons = uploadForm.querySelectorAll('.effects__radio');
@@ -103,32 +102,32 @@
       if (target) {
         imagePreview.className = 'effects__preview--' + evt.target.value;
         currentEffect = evt.target.value;
-        window.slider.setEffect();
+        setEffect();
       }
     });
   }
 
   // ----------- Показываем фотографии в полноэкранном формате при нажатии на маленькое----------
 
-  window.gallery.addEventListener('click', function (evt) {
+  window.galleryElement.addEventListener('click', function (evt) {
     var targetElement = evt.target.closest('.picture__link');
     if (targetElement) {
       var imageElement = targetElement.querySelector('img');
 
       if (imageElement) {
         if (pictureElements.length === 0) {
-          pictureElements = window.gallery.querySelectorAll('.picture__img');
+          pictureElements = window.galleryElement.querySelectorAll('.picture__img');
         }
         var index = Array.from(pictureElements).indexOf(imageElement);
-        window.renderBigPicture(window.photos[index]);
-        window.bigPicture.bigPicture.classList.remove('hidden');
+        window.bigPicture.render(window.dataPhotoArr[index]);
+        window.bigPicture.element.classList.remove('hidden');
       }
     }
   });
 
   // ----------- Закрываем окно bigPicture ----------
 
-  var btnCloseBigPicture = window.bigPicture.bigPicture.querySelector('.big-picture__cancel');
+  var btnCloseBigPicture = window.bigPicture.element.querySelector('.big-picture__cancel');
 
   var resetImgForm = function () {
     printSize(100);
@@ -137,7 +136,7 @@
   };
 
   var closeBigPicture = function () {
-    window.bigPicture.bigPicture.classList.add('hidden');
+    window.bigPicture.element.classList.add('hidden');
     resetImgForm();
   };
 
@@ -150,7 +149,7 @@
 
   window.addEventListener('keydown', function (evt) { // закрываем и большую картинку и форму
     if (evt.keyCode === ESC_KEYCODE) {
-      if (!window.bigPicture.bigPicture.classList.contains('hidden')) {
+      if (!window.bigPicture.element.classList.contains('hidden')) {
         closeBigPicture();
       }
       if (!uploadForm.classList.contains('hidden')) {
@@ -158,4 +157,55 @@
       }
     }
   });
+
+  // ----------- Работа с хештегами и комментариями ----------
+
+  function searchForSameValues(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      var arrValue = arr[i];
+      for (var l = 0; l < arr.length; l++) {
+        if (arr[l] === arrValue && l !== i) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  var HASHTAG = {
+    code: '#',
+    maxCount: 5,
+    maxChars: 20
+  };
+
+  hashtagsContainer.addEventListener('input', function () {
+    hashtagsContainer.setCustomValidity('');
+    var textHashtags = hashtagsContainer.value.toLowerCase().trim();
+    var hashtags = textHashtags.split(' ');
+    var sameValue = searchForSameValues(hashtags);
+
+    if (sameValue) {
+      hashtagsContainer.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
+    }
+    if (hashtags.length > HASHTAG.maxCount) {
+      hashtagsContainer.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
+    }
+
+    for (var i = 0; i < hashtags.length; i++) {
+      if (hashtags[i][0] !== HASHTAG.code) {
+        hashtagsContainer.setCustomValidity('Хэш-тег начинается с символа #');
+      }
+      if (hashtags[i] === HASHTAG.code) {
+        hashtagsContainer.setCustomValidity('Хеш-тег не может состоять только из одной решётки');
+      }
+      if (hashtags[i].length > HASHTAG.maxChars) {
+        hashtagsContainer.setCustomValidity('Максимальная длина одного хэш-тега 20 символов');
+      }
+    }
+  });
+
+  window.form = {
+    mapPinValue: positionPinElementValue,
+    drowEffect: setEffect
+  };
 })();

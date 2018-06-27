@@ -10,7 +10,7 @@
   scaleLevel.style.width = '100%';
 
   scalePin.addEventListener('mouseup', function () {
-    window.slider.setEffect();
+    window.form.drowEffect();
   });
 
   var SLIDER_WIDTH = 450;
@@ -36,10 +36,11 @@
       var leftOffsetPin = scalePin.offsetLeft - shift.x;
 
       if (leftOffsetPin >= 0 && SLIDER_WIDTH >= leftOffsetPin) {
-        window.slider.positionPin = (leftOffsetPin / SLIDER_WIDTH) * 100;
+        window.form.mapPinValue = (leftOffsetPin / SLIDER_WIDTH) * 100;
         scalePin.style.left = leftOffsetPin + 'px';
-        scaleLevel.style.width = window.slider.positionPin + '%';
-        window.slider.setEffect();
+        scaleLevel.style.width = window.form.mapPinValue + '%';
+        // window.form.mapPinValue = Math.floor((leftOffsetPin / SLIDER_WIDTH) * 100);
+        window.form.drowEffect();
       }
 
     };

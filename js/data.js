@@ -51,5 +51,6 @@
   };
 
   appendPhotos();
-  window.photos = photos;
+
+  window.dataPhotoArr = photos;
 })();
