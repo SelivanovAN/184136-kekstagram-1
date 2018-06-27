@@ -40,6 +40,10 @@
         scalePin.style.left = leftOffsetPin + 'px';
         scaleLevel.style.width = window.form.mapPin + '%';
         window.form.mapPin = Math.floor((leftOffsetPin * 100) / SLIDER_WIDTH);
+        var pinNumber = parseInt(window.form.mapPin, 10);
+        window.slider = {
+          pinNumberValue: pinNumber
+        };
         window.form.drowEffect();
       }
 
