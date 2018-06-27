@@ -20,7 +20,7 @@
   var imagePreview = uploadForm.querySelector('.img-upload__preview > img');
   var pictureElements = [];
   var currentEffect = 'none';
-  var positionPinElementValue = uploadForm.querySelector('.scale__value').value;
+  var positionPinElement = uploadForm.querySelector('.scale__value').value;
 
   // --------- Открываем форму для редактирования ---------
 
@@ -72,19 +72,19 @@
     var result;
     switch (currentEffect) {
       case 'chrome':
-        result = 'grayscale(' + (positionPinElementValue / 100) + ')';
+        result = 'grayscale(' + (positionPinElement / 100) + ')';
         break;
       case 'sepia':
-        result = 'sepia(' + (positionPinElementValue / 100) + ')';
+        result = 'sepia(' + (positionPinElement / 100) + ')';
         break;
       case 'marvin':
-        result = 'invert(' + positionPinElementValue + '%)';
+        result = 'invert(' + positionPinElement + '%)';
         break;
       case 'phobos':
-        result = 'blur(' + (positionPinElementValue * 3 / 100) + 'px)';
+        result = 'blur(' + (positionPinElement * 3 / 100) + 'px)';
         break;
       case 'heat':
-        result = 'brightness(' + ((positionPinElementValue * 2 / 100) + 1) + ')';
+        result = 'brightness(' + ((positionPinElement * 2 / 100) + 1) + ')';
         break;
       default: result = 'none';
         break;
@@ -206,7 +206,7 @@
   // ----------- Экспорт данных ----------
 
   window.form = {
-    mapPinValue: positionPinElementValue,
+    mapPin: positionPinElement,
     drowEffect: setEffect
   };
 })();

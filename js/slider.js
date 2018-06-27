@@ -36,10 +36,10 @@
       var leftOffsetPin = scalePin.offsetLeft - shift.x;
 
       if (leftOffsetPin >= 0 && SLIDER_WIDTH >= leftOffsetPin) {
-        window.form.mapPinValue = (leftOffsetPin / SLIDER_WIDTH) * 100;
+        // window.form.mapPin = (leftOffsetPin / SLIDER_WIDTH) * 100;
         scalePin.style.left = leftOffsetPin + 'px';
-        scaleLevel.style.width = window.form.mapPinValue + '%';
-        // window.form.mapPinValue = Math.floor((leftOffsetPin / SLIDER_WIDTH) * 100);
+        scaleLevel.style.width = window.form.mapPin + '%';
+        window.form.mapPin = Math.floor((leftOffsetPin * 100) / SLIDER_WIDTH);
         window.form.drowEffect();
       }
 
