@@ -56,15 +56,15 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  // var form = document.querySelector('.img-upload__submit');
-  // var uploadOverlay = document.querySelector('.img-upload__overlay');
-  //
-  // form.addEventListener('submit', function (evt) {
-  //   window.backend.save(new FormData(form), function () {
-  //     uploadOverlay.classList.add('hidden');
-  //   });
-  //   evt.preventDefault();
-  // });
+  var form = document.querySelector('.img-upload__form');
+
+  form.addEventListener('submit', function (evt) { // нажимаем на кнопку "опубликовать и закрываем форму обнулив все данные"
+    window.backend.save(new FormData(form), function () {
+      window.util.closeForm();
+      // window.util.resetImgForm();
+    });
+    evt.preventDefault();
+  });
 
   window.backend.load(onSuccessed, onErrored);
 
