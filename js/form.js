@@ -214,6 +214,20 @@
 
   // ----------- Экспорт данных ----------
 
+  var form = document.querySelector('.img-upload__form');
+
+  form.addEventListener('submit', function (evt) { // нажимаем на кнопку "опубликовать и закрываем форму обнулив все данные"
+    window.backend.save(new FormData(form), function () {
+      closeForm();
+      resetImgForm();
+      // window.utilcloseForm();
+      // window.util.resetImgForm();
+    });
+    evt.preventDefault();
+  });
+
+  // ----------- Экспорт данных ----------
+
   window.form = {
     mapPinValue: positionPinElement,
     drawEffect: setEffect
