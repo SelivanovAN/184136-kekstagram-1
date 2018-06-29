@@ -117,17 +117,17 @@
 
   // ----------- Показываем фотографии в полноэкранном формате при нажатии на маленькое----------
 
-  window.galleryElement.addEventListener('click', function (evt) {
+  window.gallery.element.addEventListener('click', function (evt) {
     var targetElement = evt.target.closest('.picture__link');
     if (targetElement) {
       var imageElement = targetElement.querySelector('img');
 
       if (imageElement) {
         if (pictureElements.length === 0) {
-          pictureElements = window.galleryElement.querySelectorAll('.picture__img');
+          pictureElements = window.gallery.element.querySelectorAll('.picture__img');
         }
-        // var index = Array.from(pictureElements).indexOf(imageElement);
-        // window.bigPicture.render(window.dataPhotoArr[index]);
+        var index = Array.from(pictureElements).indexOf(imageElement);
+        window.bigPicture.render(window.gallery.photos()[index]);
         window.bigPicture.element.classList.remove('hidden');
       }
     }
@@ -189,6 +189,10 @@
   hashtagsContainer.addEventListener('input', function () {
     hashtagsContainer.setCustomValidity('');
     var textHashtags = hashtagsContainer.value.toLowerCase().trim();
+    if (textHashtags === '') {
+      return;
+    }
+
     var hashtags = textHashtags.split(' ');
     var sameValue = searchForSameValues(hashtags);
 
@@ -220,8 +224,7 @@
     window.backend.save(new FormData(form), function () {
       closeForm();
       resetImgForm();
-      // window.utilcloseForm();
-      // window.util.resetImgForm();
+      form.reset();
     });
     evt.preventDefault();
   });

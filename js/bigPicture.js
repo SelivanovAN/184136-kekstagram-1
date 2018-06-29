@@ -4,7 +4,6 @@
   var MIN_NUMBER_COMMENTS = 1;
   var MAX_NUMBER_COMMENTS = 6;
 
-
   var bigPictureElement = document.querySelector('.big-picture');
 
   var renderBigPicture = function (photo) {

@@ -1,8 +1,10 @@
 'use strict';
 
 (function () {
+  var COUNT_PHOTOS = 25;
   var galleryElement = document.querySelector('.pictures');
   var pictureTemplate = document.querySelector('#picture').content;
+  var photos = [];
 
   // --------- Заполняем данными сгенерированные карточки (функция создания DOM-элемента на основе JS-объекта )---------
 
@@ -15,19 +17,8 @@
     return photoElement;
   };
 
-  // var addPhotoToFragment = function () {
-  //   var fragment = document.createDocumentFragment();
-  //   // --------- функция заполнения контейнера DOM-элементами на основе массива из 25 шт---------
-  //   for (var i = 0; i < window.dataPhotoArr.length; i++) {
-  //     fragment.appendChild(renderPhoto(window.dataPhotoArr[i]));
-  //   }
-  //   galleryElement.appendChild(fragment);
-  // };
-
-  // addPhotoToFragment();
-
-  var onSuccessed = function (photos) {
-    var COUNT_PHOTOS = 25;
+  var onSuccessed = function (response) {
+    photos = response.slice();
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < COUNT_PHOTOS; i++) {
@@ -39,18 +30,7 @@
 
   var onErrored = function (errorMessage) {
     var node = document.createElement('div');
-
-    node.style = 'z-index: 5; margin: 0 auto; background-color: red; border-radius: 15px;';
-    node.style.position = 'absolute';
-    node.style.display = 'flex';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.top = '25%';
-    node.style.alignItems = 'center';
-    node.style.justifyContent = 'center';
-    node.style.width = '50%';
-    node.style.height = '100px';
-    node.style.fontSize = '24px';
+    node.classList.add('error__donlowd');
     node.textContent = errorMessage;
 
     document.body.insertAdjacentElement('afterbegin', node);
@@ -58,5 +38,10 @@
 
   window.backend.load(onSuccessed, onErrored);
 
-  window.galleryElement = galleryElement;
+  window.gallery = {
+    element: galleryElement,
+    photos: function () {
+      return photos;
+    }
+  };
 })();

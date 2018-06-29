@@ -1154,6 +1154,22 @@ main {
   opacity: 1;
 }
 
+/* Ошибка зугрузки фоток */
+
+.error__donlowd {
+  position: absolute;
+  display: flex;
+  margin: 0 auto;
+  z-index: 55;
+  left: 25%;
+  border-radius: 15px;
+  top: 25%;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100px;
+  background-color: red;
+}
 
 /* Футер */
 
