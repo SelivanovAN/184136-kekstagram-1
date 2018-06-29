@@ -3,7 +3,7 @@
 (function () {
   var MIN_NUMBER_COMMENTS = 1;
   var MAX_NUMBER_COMMENTS = 6;
-
+  var MAX_COUNT_COMMENTS_IN_BIGPICTHER = 5;
 
   var bigPictureElement = document.querySelector('.big-picture');
 
@@ -18,9 +18,13 @@
 
     var fragmentBigPicture = document.createDocumentFragment();
 
-    for (var l = 0; l < photo.comments.length; l++) {
+    for (var l = 0; l < MAX_COUNT_COMMENTS_IN_BIGPICTHER; l++) {
       var listElement = document.createElement('li');
       listElement.classList.add('social__comment');
+
+      // if (listElement <= 5) {
+      //   socialCommentLoad.classList.remove('visually-hidden');
+      // }
 
       var commentImage = document.createElement('img');
       commentImage.src = 'img/avatar-' + window.util.getRandomNumber(MIN_NUMBER_COMMENTS, MAX_NUMBER_COMMENTS) + '.svg';
@@ -39,11 +43,11 @@
     socialComments.appendChild(fragmentBigPicture);
   };
 
-  var socialCommentCount = document.querySelector('.social__comment-count');
-  var socialCommentLoad = document.querySelector('.social__loadmore');
+  // var socialCommentCount = document.querySelector('.social__comment-count');
+  // var socialCommentLoad = document.querySelector('.social__loadmore');
 
-  socialCommentCount.classList.add('visually-hidden');
-  socialCommentLoad.classList.add('visually-hidden');
+  // socialCommentCount.classList.add('visually-hidden');
+  // socialCommentLoad.classList.add('visually-hidden');
 
   window.bigPicture = {
     element: bigPictureElement,
