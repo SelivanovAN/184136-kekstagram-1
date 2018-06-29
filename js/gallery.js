@@ -15,16 +15,58 @@
     return photoElement;
   };
 
-  var addPhotoToFragment = function () {
+  // var addPhotoToFragment = function () {
+  //   var fragment = document.createDocumentFragment();
+  //   // --------- функция заполнения контейнера DOM-элементами на основе массива из 25 шт---------
+  //   for (var i = 0; i < window.dataPhotoArr.length; i++) {
+  //     fragment.appendChild(renderPhoto(window.dataPhotoArr[i]));
+  //   }
+  //   galleryElement.appendChild(fragment);
+  // };
+
+  // addPhotoToFragment();
+
+  var onSuccessed = function (photos) {
+    var COUNT_PHOTOS = 25;
     var fragment = document.createDocumentFragment();
-    // --------- функция заполнения контейнера DOM-элементами на основе массива из 25 шт---------
-    for (var i = 0; i < window.dataPhotoArr.length; i++) {
-      fragment.appendChild(renderPhoto(window.dataPhotoArr[i]));
+
+    for (var i = 0; i < COUNT_PHOTOS; i++) {
+      fragment.appendChild(renderPhoto(photos[i]));
     }
+
     galleryElement.appendChild(fragment);
   };
 
-  addPhotoToFragment();
+  var onErrored = function (errorMessage) {
+    var node = document.createElement('div');
+
+    node.style = 'z-index: 5; margin: 0 auto; background-color: red; border-radius: 15px;';
+    node.style.position = 'absolute';
+    node.style.display = 'flex';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.top = '25%';
+    node.style.alignItems = 'center';
+    node.style.justifyContent = 'center';
+    node.style.width = '50%';
+    node.style.height = '100px';
+    node.style.fontSize = '24px';
+    node.textContent = errorMessage;
+
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  // var form = document.querySelector('.img-upload__submit');
+  // var uploadOverlay = document.querySelector('.img-upload__overlay');
+  //
+  // form.addEventListener('submit', function (evt) {
+  //   window.backend.save(new FormData(form), function () {
+  //     uploadOverlay.classList.add('hidden');
+  //   });
+  //   evt.preventDefault();
+  // });
+
+  window.backend.load(onSuccessed, onErrored);
 
   window.galleryElement = galleryElement;
 })();

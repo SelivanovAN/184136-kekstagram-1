@@ -126,8 +126,8 @@
         if (pictureElements.length === 0) {
           pictureElements = window.galleryElement.querySelectorAll('.picture__img');
         }
-        var index = Array.from(pictureElements).indexOf(imageElement);
-        window.bigPicture.render(window.dataPhotoArr[index]);
+        // var index = Array.from(pictureElements).indexOf(imageElement);
+        // window.bigPicture.render(window.dataPhotoArr[index]);
         window.bigPicture.element.classList.remove('hidden');
       }
     }
