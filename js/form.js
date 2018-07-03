@@ -115,13 +115,6 @@
     });
   }
 
-  // ----------- Показываем фотографии в полноэкранном формате при нажатии на маленькое----------
-
-
-  // ----------- Закрываем окно bigPicture ----------
-
-  var btnCloseBigPicture = window.bigPicture.element.querySelector('.big-picture__cancel');
-
   var resetImgForm = function () {
     printSize(100);
     imagePreview.setAttribute('class', '');
@@ -132,6 +125,9 @@
     window.bigPicture.element.classList.add('hidden');
     resetImgForm();
   };
+
+  // ----------- Закрываем окно bigPicture ----------
+  var btnCloseBigPicture = window.bigPicture.element.querySelector('.big-picture__cancel');
 
   btnCloseBigPicture.addEventListener('click', closeBigPicture);
 

@@ -9,7 +9,10 @@
     var filteredPhotos = window.photos.data().slice();
     switch (filterName) {
       case 'filter-new':
-        filteredPhotos = 'grayscale(' + (sliderValue / 100) + ')';
+        filteredPhotos = filteredPhotos.sort(function () {
+          // return Math.random();
+          return filteredPhotos.slice(0, window.util.getRandomNumber(0, filteredPhotos.length));
+        });
         break;
       case 'filter-discussed':
         filteredPhotos = filteredPhotos.sort(function (a, b) {
@@ -35,16 +38,4 @@
   filterFormElement.addEventListener('click', onFilterClick);
 
   window.updatePhotos = updatePhotos;
-
-  // **************************************************
-
-  // var filterByNew = function () {
-  //   var arrNew = photos.slice().sort(function () {
-  //     return 0.5 - Math.random();
-  //   });
-  //
-  //   return arrNew.slice(0, 10);
-  // }
-  //
-
 })();
