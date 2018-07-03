@@ -17,8 +17,8 @@
     socialComments.innerHTML = '';
 
     var fragmentBigPicture = document.createDocumentFragment();
-
-    var COUNT_COMMENTS = photo.comments.length > 5 ? 5 : photo.comments.length;
+    var MAX_COMMENTS = 5;
+    var COUNT_COMMENTS = photo.comments.length > MAX_COMMENTS ? MAX_COMMENTS : photo.comments.length;
 
     for (var l = 0; l < COUNT_COMMENTS; l++) {
       var listElement = document.createElement('li');
