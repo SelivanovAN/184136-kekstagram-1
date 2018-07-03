@@ -20,7 +20,7 @@
 
 
   var appendPhotos = function (data) {
-    galleryElement.innerHTML = '';
+    // galleryElement.innerHTML = '';
 
     for (var i = 0; i < COUNT_PHOTOS; i++) {
       fragment.appendChild(renderPhoto(data[i]));

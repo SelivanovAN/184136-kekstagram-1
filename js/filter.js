@@ -20,10 +20,28 @@
     filterBtnNew.classList.add('img-filters__button--active');
   });
 
+  var filterByDiscuss = function () {
+    var arrDiscuss = photos.slice().sort(function (a, b) {
+      var adiscussion = a.comments.length;
+      var bdiscussion = b.comments.length;
+      var discussionDiff = bdiscussion - adiscussion;
+
+      if (discussionDiff === 0) {
+        discussionDiff = b.likes - a.likes;
+      }
+      return discussionDiff;
+    });
+
+    return arrDiscuss;
+  };
+
   filterBtnDiscused.addEventListener('mousedown', function () {
     filterBtnNew.classList.remove('img-filters__button--active');
     filterBtnPopular.classList.remove('img-filters__button--active');
     filterBtnDiscused.classList.add('img-filters__button--active');
+
+    filterByDiscuss();
+
   });
 
   window.filters = {
@@ -57,14 +75,15 @@
   // };
 
   var updatePhotos = function () {
-    window.photos.render(window.photos.data().slice().
-      sort(function (left, right) {
+    window.photos.render(window.photos.data().slice())
+
+    //.sort(function (left, right) {
         // var rankDiff = getRank(right) - getRank(left);
         // if (rankDiff === 0) {
         //   rankDiff = wizards.indexOf(left) - wizards.indexOf(right);
         // }
         // return rankDiff;
-      }));
+      //}));
   };
 
   window.updatePhotos = updatePhotos;
@@ -73,26 +92,13 @@
 
   // **************************************************
 
-  // function filterByDiscuss() {
-  //   var arrDiscuss = photos.slice().sort(function (a, b) {
-  //     var adiscussion = a.comments.length;
-  //     var bdiscussion = b.comments.length;
-  //     var discussionDiff = bdiscussion - adiscussion;
+
   //
-  //     if (discussionDiff === 0) {
-  //       discussionDiff = b.likes - a.likes;
-  //     }
-  //     return discussionDiff;
-  //   });
-  //
-  //   return arrDiscuss;
-  // }
-  //
-  // function filterByPopularity() {
+  // var filterByPopularity = function () {
   //   return photos;
   // }
   //
-  // function filterByNew() {
+  // var filterByNew = function () {
   //   var arrNew = photos.slice().sort(function () {
   //     return 0.5 - Math.random();
   //   });
