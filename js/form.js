@@ -18,7 +18,7 @@
   var MAX_SCALE = 100;
   var STEP_SCALE = 25;
   var imagePreview = uploadForm.querySelector('.img-upload__preview > img');
-  var pictureElements = [];
+
   var currentEffect = 'none';
   var positionPinElement = uploadForm.querySelector('.scale__value').value;
   var imgUploadScale = document.querySelector('.img-upload__scale');
@@ -117,21 +117,6 @@
 
   // ----------- Показываем фотографии в полноэкранном формате при нажатии на маленькое----------
 
-  window.gallery.element.addEventListener('click', function (evt) {
-    var targetElement = evt.target.closest('.picture__link');
-    if (targetElement) {
-      var imageElement = targetElement.querySelector('img');
-
-      if (imageElement) {
-        if (pictureElements.length === 0) {
-          pictureElements = window.gallery.element.querySelectorAll('.picture__img');
-        }
-        var index = Array.from(pictureElements).indexOf(imageElement);
-        window.bigPicture.render(window.gallery.photos()[index]);
-        window.bigPicture.element.classList.remove('hidden');
-      }
-    }
-  });
 
   // ----------- Закрываем окно bigPicture ----------
 

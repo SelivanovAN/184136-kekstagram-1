@@ -3,7 +3,6 @@
 (function () {
   var MIN_NUMBER_COMMENTS = 1;
   var MAX_NUMBER_COMMENTS = 6;
-  // var MAX_COUNT_COMMENTS_IN_BIGPICTHER = 5;
 
   var bigPictureElement = document.querySelector('.big-picture');
 
@@ -23,10 +22,6 @@
     for (var l = 0; l < COUNT_COMMENTS; l++) {
       var listElement = document.createElement('li');
       listElement.classList.add('social__comment');
-
-      // if (listElement <= 5) {
-      //   socialCommentLoad.classList.remove('visually-hidden');
-      // }
 
       var commentImage = document.createElement('img');
       commentImage.src = 'img/avatar-' + window.util.getRandomNumber(MIN_NUMBER_COMMENTS, MAX_NUMBER_COMMENTS) + '.svg';

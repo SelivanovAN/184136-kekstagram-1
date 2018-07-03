@@ -1,103 +1,43 @@
 'use strict';
 
 (function () {
-  var filters = document.querySelector('.img-filters');
-  var filterBtnPopular = filters.querySelector('#filter-popular');
-  var filterBtnNew = filters.querySelector('#filter-new');
-  var filterBtnDiscused = filters.querySelector('#filter-discussed');
+  var activeClassName = 'img-filters__button--active';
 
+  var filterFormElement = document.querySelector('.img-filters__form');
 
-  filterBtnPopular.addEventListener('mousedown', function () {
-    filterBtnNew.classList.remove('img-filters__button--active');
-    filterBtnDiscused.classList.remove('img-filters__button--active');
-    filterBtnPopular.classList.add('img-filters__button--active');
+  var updatePhotos = function (filterName) {
+    var filteredPhotos = window.photos.data().slice();
+    switch (filterName) {
+      case 'filter-new':
+        filteredPhotos = 'grayscale(' + (sliderValue / 100) + ')';
+        break;
+      case 'filter-discussed':
+        filteredPhotos = filteredPhotos.sort(function (a, b) {
+          return b.comments.length - a.comments.length;
+        });
+        break;
+    }
+    window.photos.render(filteredPhotos);
+  };
 
-  });
-
-  filterBtnNew.addEventListener('mousedown', function () {
-    filterBtnPopular.classList.remove('img-filters__button--active');
-    filterBtnDiscused.classList.remove('img-filters__button--active');
-    filterBtnNew.classList.add('img-filters__button--active');
-  });
-
-  var filterByDiscuss = function () {
-    var arrDiscuss = photos.slice().sort(function (a, b) {
-      var aDiscussion = a.comments.length;
-      var bDiscussion = b.comments.length;
-      var discussionDiff = bDiscussion - aDiscussion;
-
-      if (discussionDiff === 0) {
-        discussionDiff = b.likes - a.likes;
+  var onFilterClick = function (evt) {
+    var target = evt.target;
+    if (target.tagName === 'BUTTON') {
+      var selectedFilter = filterFormElement.querySelector('.' + activeClassName);
+      if (selectedFilter) {
+        selectedFilter.classList.remove(activeClassName);
       }
-      return discussionDiff;
-    });
-
-    return arrDiscuss;
+      target.classList.add(activeClassName);
+      updatePhotos(target.id);
+    }
   };
 
-  filterBtnDiscused.addEventListener('mousedown', function () {
-    filterBtnNew.classList.remove('img-filters__button--active');
-    filterBtnPopular.classList.remove('img-filters__button--active');
-    filterBtnDiscused.classList.add('img-filters__button--active');
-
-    filterByDiscuss();
-
-  });
-
-  window.filters = {
-    active: filterBtnPopular
-  };
-  // img-filters__button--active
-
-  // var changeEyesColor = function (colorEyes) {
-  //   wizardEyes.style.fill = colorEyes;
-  //   newEyesColor = colorEyes;
-  //   window.updateWizards();
-  // };
-  //
-  // wizardEyes.addEventListener('click', function () { // событие по изменению цвета глаз мага при нажатии
-  //   var colorEyes = COLOR_WIZARD_EYES[window.util.getRandomIndex(0, COLOR_WIZARD_EYES.length - 1)];
-  //   window.debounce(changeEyesColor(colorEyes));
-  // });
-  var photos = [];
-
-  // var getRank = function (wizard) {
-  //   var rank = 0;
-  //
-  //   if (wizard.colorCoat === window.characterWizard.coatColor()) {
-  //     rank += 2;
-  //   }
-  //   if (wizard.colorEyes === window.characterWizard.eyesColor()) {
-  //     rank += 1;
-  //   }
-  //
-  //   return rank;
-  // };
-
-  var updatePhotos = function () {
-    window.photos.render(window.photos.data().slice())
-
-    //.sort(function (left, right) {
-        // var rankDiff = getRank(right) - getRank(left);
-        // if (rankDiff === 0) {
-        //   rankDiff = wizards.indexOf(left) - wizards.indexOf(right);
-        // }
-        // return rankDiff;
-      //}));
-  };
+  filterFormElement.addEventListener('click', onFilterClick);
 
   window.updatePhotos = updatePhotos;
 
-
-
   // **************************************************
 
-
-  //
-  // var filterByPopularity = function () {
-  //   return photos;
-  // }
-  //
   // var filterByNew = function () {
   //   var arrNew = photos.slice().sort(function () {
   //     return 0.5 - Math.random();
