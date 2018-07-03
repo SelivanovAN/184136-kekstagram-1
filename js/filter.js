@@ -106,7 +106,5 @@
   //   return arrNew.slice(0, 10);
   // }
   //
-  // window.filter = {
-  //   init: showFilters
-  // };
+
 })();
