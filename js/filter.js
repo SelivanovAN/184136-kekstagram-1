@@ -22,9 +22,9 @@
 
   var filterByDiscuss = function () {
     var arrDiscuss = photos.slice().sort(function (a, b) {
-      var adiscussion = a.comments.length;
-      var bdiscussion = b.comments.length;
-      var discussionDiff = bdiscussion - adiscussion;
+      var aDiscussion = a.comments.length;
+      var bDiscussion = b.comments.length;
+      var discussionDiff = bDiscussion - aDiscussion;
 
       if (discussionDiff === 0) {
         discussionDiff = b.likes - a.likes;
