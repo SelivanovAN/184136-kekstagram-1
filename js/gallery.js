@@ -37,18 +37,19 @@
 
     galleryElement.appendChild(fragment);
 
-    galleryElement.addEventListener('click', function (evt) {
-      var targetElement = evt.target.closest('.picture__link');
-      if (targetElement) {
-        var imageElement = targetElement.querySelector('img');
+    galleryElement.addEventListener('click', function (evt) { // событие по клику на маленькую фотку для отображения большой
+      var targetElement = evt.target.closest('.picture__link'); // возвращает клик если он произошел на элекменте с классом picture__link
+      if (targetElement) { // если событие было на теге с классом picture__link
+        var imageElement = targetElement.querySelector('img'); // у елемента, на котором произошло событие выбирает элемент с тегом IMG
 
-        if (imageElement) {
-          if (pictureElements.length === 0) {
-            pictureElements = galleryElement.querySelectorAll('.picture__img');
+        if (imageElement) { // если событие было на теге с классом picture__link
+          if (pictureElements.length === 0) { // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ - сравнение цифру длину массива
+            pictureElements = galleryElement.querySelectorAll('.picture__img'); // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ = присваиваем или выбираем из массива элементы с классом picture__img
           }
-          var index = Array.from(pictureElements).indexOf(imageElement);
-          window.bigPicture.render(photos[index]);
-          window.bigPicture.element.classList.remove('hidden');
+          var index = Array.from(pictureElements).indexOf(imageElement); // Метод Array.from() создаёт новый экземпляр Array из массивоподобного или итерируемого объекта
+          // Метод indexOf() возвращает первый индекс, по которому данный элемент может быть найден в массиве или -1, если такого индекса нет.
+          window.bigPicture.render(photos[index]); // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ отрисовываем картинку и ее атрибуты, в зависимости от того на какой картинке было событие (отрисовываем саму картинку, лайка, описание)
+          window.bigPicture.element.classList.remove('hidden'); // удаляем класс у большой картинки и отображаем маленькую в полноэкранном виде
         }
       }
     });
@@ -77,6 +78,7 @@
     render: appendPhotos,
     data: function () {
       return photos;
-    }
+    },
+    remove: removePhotos
   };
 })();
