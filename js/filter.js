@@ -6,7 +6,7 @@
   var filterFormElement = document.querySelector('.img-filters__form');
 
   var updatePhotos = function (filterName) {
-    var filteredPhotos = window.photos.data().slice();
+    var filteredPhotos = window.gallery.data().slice();
     switch (filterName) {
       case 'filter-new':
         filteredPhotos = filteredPhotos.sort(function () {
@@ -27,11 +27,11 @@
         });
         break;
     }
-    window.photos.render(filteredPhotos);
+    window.gallery.render(filteredPhotos);
   };
 
   var onFilterClick = function (evt) {
-    window.photos.remove();
+    window.gallery.remove();
     var target = evt.target;
     if (target.tagName === 'BUTTON') {
       var selectedFilter = filterFormElement.querySelector('.' + activeClassName);

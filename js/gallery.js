@@ -39,6 +39,9 @@
 
     galleryElement.addEventListener('click', function (evt) { // событие по клику на маленькую фотку для отображения большой
       var targetElement = evt.target.closest('.picture__link'); // возвращает клик если он произошел на элекменте с классом picture__link
+      // EventTarget.addEventListener() Регистрирует обработчик событий указанного типа на объекте
+      // Метод Element.closest() возвращает ближайший родительский элемент (или сам элемент), который соответствует заданному CSS-селектору или null, если таковых элементов вообще нет.
+      // var elt = element.closest(selectors); selectors - строка, а точнее DOMString, содержащая CSS-селектор, к примеру: "#id", ".class", "div"..  Результат - элемент DOM (Element), либо nul
       if (targetElement) { // если событие было на теге с классом picture__link
         var imageElement = targetElement.querySelector('img'); // у елемента, на котором произошло событие выбирает элемент с тегом IMG
 
@@ -46,7 +49,8 @@
           if (pictureElements.length === 0) { // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ - сравнение цифру длину массива
             pictureElements = galleryElement.querySelectorAll('.picture__img'); // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ = присваиваем или выбираем из массива элементы с классом picture__img
           }
-          var index = Array.from(pictureElements).indexOf(imageElement); // Метод Array.from() создаёт новый экземпляр Array из массивоподобного или итерируемого объекта
+          var index = Array.from(pictureElements).indexOf(imageElement);
+          // Метод Array.from() создаёт новый экземпляр Array из массивоподобного или итерируемого объекта
           // Метод indexOf() возвращает первый индекс, по которому данный элемент может быть найден в массиве или -1, если такого индекса нет.
           window.bigPicture.render(photos[index]); // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ отрисовываем картинку и ее атрибуты, в зависимости от того на какой картинке было событие (отрисовываем саму картинку, лайка, описание)
           window.bigPicture.element.classList.remove('hidden'); // удаляем класс у большой картинки и отображаем маленькую в полноэкранном виде
@@ -74,7 +78,7 @@
 
   window.backend.load(onSuccessed, onErrored);
 
-  window.photos = {
+  window.gallery = {
     render: appendPhotos,
     data: function () {
       return photos;
