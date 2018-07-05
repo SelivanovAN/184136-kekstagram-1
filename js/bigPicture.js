@@ -9,6 +9,7 @@
   var btnCloseBigPicture = bigPictureElement.querySelector('.big-picture__cancel');
   var socialCommentCount = document.querySelector('.social__comment-count');
   var socialCommentLoad = document.querySelector('.social__loadmore');
+  var body = document.querySelector('body');
 
   var imageValue = {
     width: 35,
@@ -46,6 +47,7 @@
       fragmentBigPicture.appendChild(listElement);
     }
     socialComments.appendChild(fragmentBigPicture);
+    body.classList.add('modal-open');
   };
 
   socialCommentCount.classList.add('visually-hidden');
@@ -54,6 +56,7 @@
   var closeBigPicture = function () {
     bigPictureElement.classList.add('hidden');
     window.form.resetImgForm();
+    body.classList.remove('modal-open');
   };
 
   btnCloseBigPicture.addEventListener('click', closeBigPicture);

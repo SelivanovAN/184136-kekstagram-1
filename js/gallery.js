@@ -45,7 +45,6 @@
         pictureElements = galleryElement.querySelectorAll('.picture__img');
 
         var index = Array.from(pictureElements).indexOf(imageElement);
-
         window.bigPicture.render(window.filter.photos()[index]);
         window.bigPicture.element.classList.remove('hidden');
       }

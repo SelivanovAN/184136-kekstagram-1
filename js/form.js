@@ -21,10 +21,10 @@
   var imageUpload = uploadForm.querySelector('.img-upload__preview');
   var imagePreview = uploadForm.querySelector('.img-upload__preview > img');
   var positionPinValue = uploadForm.querySelector('.scale__value').value;
-  var imgUploadScale = document.querySelector('.img-upload__scale');
-  var textDescription = document.querySelector('.text__description');
-  var hashtagsContainer = document.querySelector('.text__hashtags');
   var radioButtons = uploadForm.querySelectorAll('.effects__radio');
+  var imgUploadScale = uploadForm.querySelector('.img-upload__scale');
+  var textDescription = uploadForm.querySelector('.text__description');
+  var hashtagsContainer = uploadForm.querySelector('.text__hashtags');
   var form = document.querySelector('.img-upload__form');
   var scaleValueNumber = parseInt(scaleValue, 10);
   var currentEffect = 'none';
@@ -89,7 +89,7 @@
     imagePreview.style.filter = result;
   };
 
-  for (var j = 0; j < radioButtons.length; j++) {
+  Array.prototype.forEach.call(radioButtons, function (element, j) {
     radioButtons[j].addEventListener('click', function (evt) {
 
       var target = evt.target.closest('.img-upload__effects');
@@ -106,7 +106,7 @@
         setEffect(positionPinValue);
       }
     });
-  }
+  });
 
   var resetImgForm = function () {
     printSize(100);
@@ -130,18 +130,6 @@
     }
   });
 
-  function searchForSameValues(arr) {
-    for (var i = 0; i < arr.length; i++) {
-      var arrValue = arr[i];
-      for (var l = 0; l < arr.length; l++) {
-        if (arr[l] === arrValue && l !== i) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   hashtagsContainer.addEventListener('input', function () {
     hashtagsContainer.setCustomValidity('');
     var textHashtags = hashtagsContainer.value.toLowerCase().trim();
@@ -150,7 +138,7 @@
     }
 
     var hashtags = textHashtags.split(' ');
-    var sameValue = searchForSameValues(hashtags);
+    var sameValue = window.util.shuffleArray(hashtags);
 
     if (sameValue) {
       hashtagsContainer.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
