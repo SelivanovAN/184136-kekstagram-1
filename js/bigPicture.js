@@ -7,8 +7,8 @@
 
   var bigPictureElement = document.querySelector('.big-picture');
   var btnCloseBigPicture = bigPictureElement.querySelector('.big-picture__cancel');
-  var socialCommentCount = document.querySelector('.social__comment-count');
-  var socialCommentLoad = document.querySelector('.social__loadmore');
+  var socialCommentCount = bigPictureElement.querySelector('.social__comment-count');
+  var socialCommentLoad = bigPictureElement.querySelector('.social__loadmore');
   var body = document.querySelector('body');
 
   var imageValue = {
