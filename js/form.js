@@ -20,12 +20,11 @@
   var scaleValue = uploadForm.querySelector('.resize__control--value').value;
   var imageUpload = uploadForm.querySelector('.img-upload__preview');
   var imagePreview = uploadForm.querySelector('.img-upload__preview > img');
-  var positionPinElement = uploadForm.querySelector('.scale__value').value;
+  var positionPinValue = uploadForm.querySelector('.scale__value').value;
   var imgUploadScale = document.querySelector('.img-upload__scale');
   var textDescription = document.querySelector('.text__description');
   var hashtagsContainer = document.querySelector('.text__hashtags');
   var radioButtons = uploadForm.querySelectorAll('.effects__radio');
-  var btnCloseBigPicture = window.bigPicture.element.querySelector('.big-picture__cancel');
   var form = document.querySelector('.img-upload__form');
   var scaleValueNumber = parseInt(scaleValue, 10);
   var currentEffect = 'none';
@@ -104,7 +103,7 @@
         }
         currentEffect = evt.target.value;
         window.slider.setDefaultPosition();
-        setEffect(positionPinElement);
+        setEffect(positionPinValue);
       }
     });
   }
@@ -115,13 +114,6 @@
     imagePreview.style.filter = 'none';
   };
 
-  var closeBigPicture = function () {
-    window.bigPicture.element.classList.add('hidden');
-    resetImgForm();
-  };
-
-  btnCloseBigPicture.addEventListener('click', closeBigPicture);
-
   uploadClose.addEventListener('click', function () {
     closeForm();
     resetImgForm();
@@ -130,7 +122,7 @@
   window.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       if (!window.bigPicture.element.classList.contains('hidden')) {
-        closeBigPicture();
+        window.bigPicture.close();
       }
       if (!uploadForm.classList.contains('hidden')) {
         resetImgForm();
@@ -190,7 +182,8 @@
   });
 
   window.form = {
-    mapPinValue: positionPinElement,
+    mapPinValue: positionPinValue,
     drawEffect: setEffect,
+    resetImgForm: resetImgForm
   };
 })();
