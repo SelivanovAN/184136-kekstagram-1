@@ -1,17 +1,14 @@
 'use strict';
 
 (function () {
-  var COUNT_PHOTOS = 25;
   var galleryElement = document.querySelector('.pictures');
   var pictureTemplate = document.querySelector('#picture').content;
+  var fragment = document.createDocumentFragment();
+  var imgUploadMessageError = pictureTemplate.querySelector('.img-upload__message--error');
   var pictureElements = [];
   var photos = [];
-  var fragment = document.createDocumentFragment();
-
-  // --------- Заполняем данными сгенерированные карточки (функция создания DOM-элемента на основе JS-объекта )---------
 
   var renderPhoto = function (photo) {
-    // функция клонирования одного ДОМ элемента
     var photoElement = pictureTemplate.cloneNode(true);
     photoElement.querySelector('.picture__img').src = photo.url;
     photoElement.querySelector('.picture__stat--likes').textContent = photo.likes;
@@ -31,49 +28,45 @@
   var appendPhotos = function (data) {
     removePhotos();
 
-    for (var i = 0; i < COUNT_PHOTOS; i++) {
+    for (var i = 0; i < window.filter.photos().length; i++) {
       fragment.appendChild(renderPhoto(data[i]));
     }
 
     galleryElement.appendChild(fragment);
-
-    galleryElement.addEventListener('click', function (evt) { // событие по клику на маленькую фотку для отображения большой
-      var targetElement = evt.target.closest('.picture__link'); // возвращает клик если он произошел на элекменте с классом picture__link
-      // EventTarget.addEventListener() Регистрирует обработчик событий указанного типа на объекте
-      // Метод Element.closest() возвращает ближайший родительский элемент (или сам элемент), который соответствует заданному CSS-селектору или null, если таковых элементов вообще нет.
-      // var elt = element.closest(selectors); selectors - строка, а точнее DOMString, содержащая CSS-селектор, к примеру: "#id", ".class", "div"..  Результат - элемент DOM (Element), либо nul
-      if (targetElement) { // если событие было на теге с классом picture__link
-        var imageElement = targetElement.querySelector('img'); // у елемента, на котором произошло событие выбирает элемент с тегом IMG
-
-        if (imageElement) { // если событие было на теге с классом picture__link
-          if (pictureElements.length === 0) { // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ - сравнение цифру длину массива
-            pictureElements = galleryElement.querySelectorAll('.picture__img'); // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ = присваиваем или выбираем из массива элементы с классом picture__img
-          }
-          var index = Array.from(pictureElements).indexOf(imageElement);
-          // Метод Array.from() создаёт новый экземпляр Array из массивоподобного или итерируемого объекта
-          // Метод indexOf() возвращает первый индекс, по которому данный элемент может быть найден в массиве или -1, если такого индекса нет.
-          window.bigPicture.render(photos[index]); // НЕПОНЯЛ КАК ИТЕРПРИТИРОВАТЬ отрисовываем картинку и ее атрибуты, в зависимости от того на какой картинке было событие (отрисовываем саму картинку, лайка, описание)
-          window.bigPicture.element.classList.remove('hidden'); // удаляем класс у большой картинки и отображаем маленькую в полноэкранном виде
-        }
-      }
-    });
   };
+
+  galleryElement.addEventListener('click', function (evt) {
+    var targetElement = evt.target.closest('.picture__link');
+
+    if (targetElement) {
+      var imageElement = targetElement.querySelector('img');
+
+      if (imageElement) {
+        pictureElements = galleryElement.querySelectorAll('.picture__img');
+
+        var index = Array.from(pictureElements).indexOf(imageElement);
+
+        window.bigPicture.render(window.filter.photos()[index]);
+        window.bigPicture.element.classList.remove('hidden');
+      }
+    }
+  });
 
   var onSuccessed = function (response) {
     photos = response.slice();
-
-    window.updatePhotos(photos);
+    window.filter.updatePhotos();
 
     var imgFilters = document.querySelector('.img-filters');
+
     imgFilters.classList.remove('img-filters--inactive');
   };
 
-  var onErrored = function (errorMessage) {
-    var node = document.createElement('div');
-    node.classList.add('error__donlowd');
-    node.textContent = errorMessage;
+  var onErrored = function () {
+    var errorElement = imgUploadMessageError.cloneNode(true);
 
-    document.body.insertAdjacentElement('afterbegin', node);
+    document.body.insertAdjacentElement('beforeend', errorElement);
+    errorElement.classList.remove('hidden');
+    errorElement.style.zIndex = '2';
   };
 
   window.backend.load(onSuccessed, onErrored);
@@ -82,7 +75,6 @@
     render: appendPhotos,
     data: function () {
       return photos;
-    },
-    remove: removePhotos
+    }
   };
 })();
