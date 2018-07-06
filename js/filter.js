@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var activeClassName = 'img-filters__button--active';
+  var activeClassNameElement = 'img-filters__button--active';
   var filterFormElement = document.querySelector('.img-filters__form');
   var filteredPhotos = [];
 
@@ -27,13 +27,13 @@
     var target = evt.target;
 
     if (target.tagName === 'BUTTON') {
-      var selectedFilter = filterFormElement.querySelector('.' + activeClassName);
+      var selectedFilter = filterFormElement.querySelector('.' + activeClassNameElement);
 
       if (selectedFilter) {
-        selectedFilter.classList.remove(activeClassName);
+        selectedFilter.classList.remove(activeClassNameElement);
       }
 
-      target.classList.add(activeClassName);
+      target.classList.add(activeClassNameElement);
 
       window.debounce(function () {
         updatePhotos(target.id);

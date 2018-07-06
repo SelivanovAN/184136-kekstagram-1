@@ -4,21 +4,21 @@
   var SLIDER_WIDTH = 450;
   var MAX_PERCENT = 100;
 
-  var scalePin = document.querySelector('.scale__pin');
-  var scaleLevel = document.querySelector('.scale__level');
+  var scalePinElement = document.querySelector('.scale__pin');
+  var scaleLevelElement = document.querySelector('.scale__level');
 
   var setDefaultPosition = function () {
-    scalePin.style.left = '100%';
-    scaleLevel.style.width = '100%';
+    scalePinElement.style.left = '100%';
+    scaleLevelElement.style.width = '100%';
   };
 
   setDefaultPosition();
 
-  scalePin.addEventListener('mouseup', function () {
+  scalePinElement.addEventListener('mouseup', function () {
     window.form.drawEffect(parseInt(window.form.mapPinValue, 10));
   });
 
-  scalePin.addEventListener('mousedown', function (evt) {
+  scalePinElement.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -36,11 +36,11 @@
         x: moveEvt.clientX
       };
 
-      var leftOffsetPin = scalePin.offsetLeft - shift.x;
+      var leftOffsetPin = scalePinElement.offsetLeft - shift.x;
 
       if (leftOffsetPin >= 0 && SLIDER_WIDTH >= leftOffsetPin) {
-        scalePin.style.left = leftOffsetPin + 'px';
-        scaleLevel.style.width = window.form.mapPinValue + '%';
+        scalePinElement.style.left = leftOffsetPin + 'px';
+        scaleLevelElement.style.width = window.form.mapPinValue + '%';
         window.form.mapPinValue = Math.floor((leftOffsetPin * MAX_PERCENT) / SLIDER_WIDTH);
         window.form.drawEffect(parseInt(window.form.mapPinValue, 10));
       }
