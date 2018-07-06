@@ -39,7 +39,7 @@
   };
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE && document.activeElement !== hashtagsContainerElement && document.activeElement !== textDescriptionElement) { // в файле валидации window.hashtagsContainer - без виндо, как от виндоу избавиться?
+    if (evt.keyCode === ESC_KEYCODE && document.activeElement !== hashtagsContainerElement && document.activeElement !== textDescriptionElement) {
       closeForm();
     }
   });
